@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import MenuPage from "./pages/MenuPage";
+import PublicMenu from "./pages/PublicMenu";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -40,6 +41,7 @@ const App = () => (
                 </ProtectedRoute>
               } 
             />
+            <Route path="/menu/:restaurantId" element={<PublicMenu />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

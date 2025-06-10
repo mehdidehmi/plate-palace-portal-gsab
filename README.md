@@ -1,8 +1,48 @@
-# Welcome to your Lovable project
+# Welcome to Plate Palace Portal
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/4962cf75-bc46-427a-8194-fee6036fcf6a
+
+## Project Description
+
+Plate Palace Portal is a web application for restaurant menu management. It allows restaurant owners to:
+
+- Create and configure their restaurant profile
+- Manage menu items organized by categories
+- Generate a public menu page that can be shared with customers
+- Receive orders via WhatsApp integration
+
+The application is built with modern web technologies including React, TypeScript, Tailwind CSS, shadcn/ui, and Supabase.
+
+## Tests
+
+The project includes comprehensive test coverage using Vitest and React Testing Library. To run the tests:
+
+```sh
+npm test
+```
+
+The tests cover:
+- Authentication functionality
+- Menu management components
+- Public menu display and interactions
+
+## Report
+
+A comprehensive LaTeX report has been prepared for this project. The report is located in the `report` directory and covers:
+
+1. The enterprise context
+2. Project requirements and specifications
+3. Design and modeling (UML, database)
+4. Development and implementation details
+
+To compile the report:
+
+```sh
+cd report
+pdflatex -shell-escape report_outline.tex
+```
 
 ## How can I edit this code?
 
@@ -59,6 +99,10 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Supabase
+- React Query
+- React Router
+- Vitest (for testing)
 
 ## How can I deploy this project?
 

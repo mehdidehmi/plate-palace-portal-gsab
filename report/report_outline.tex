@@ -1,0 +1,355 @@
+\documentclass[12pt,a4paper]{report}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{minted}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{geometry}
+
+% Page geometry
+\geometry{
+    a4paper,
+    total={160mm,247mm},
+    left=25mm,
+    right=25mm,
+    top=25mm,
+    bottom=25mm,
+}
+
+% Define colors
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% Configure listings for code
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    {\Huge\bfseries Rapport de Stage\par}
+    \vspace{1.5cm}
+    {\LARGE\bfseries Plate Palace Portal\par}
+    \vspace{1cm}
+    {\Large Application Web de Gestion de Menu pour Restaurants\par}
+    \vspace{2cm}
+    {\Large\bfseries Présenté par:\par}
+    \vspace{0.5cm}
+    {\Large [Votre Nom]\par}
+    \vspace{1.5cm}
+    {\Large\bfseries Encadré par:\par}
+    \vspace{0.5cm}
+    {\Large [Nom de l'Encadrant]\par}
+    \vspace{1.5cm}
+    {\Large\bfseries Entreprise d'accueil:\par}
+    \vspace{0.5cm}
+    {\Large [Nom de l'Entreprise]\par}
+    \vspace{2cm}
+    {\Large Année Universitaire 2023-2024\par}
+\end{titlepage}
+
+% Table of contents
+\tableofcontents
+\newpage
+
+% Introduction générale
+\chapter*{Introduction Générale}
+\addcontentsline{toc}{chapter}{Introduction Générale}
+
+Ce rapport présente le travail effectué lors de mon stage au sein de [Nom de l'Entreprise], où j'ai participé au développement d'une application web nommée "Plate Palace Portal". Cette application vise à simplifier la gestion des menus pour les restaurants, en leur permettant de créer, modifier et partager facilement leurs menus avec leurs clients via une interface conviviale et moderne.
+
+L'objectif principal du projet était de développer une solution complète permettant aux restaurateurs de gérer leur menu en ligne et de le partager facilement sur les réseaux sociaux, notamment via WhatsApp, qui est largement utilisé au Maroc pour les commandes de nourriture.
+
+Ce rapport est structuré en quatre chapitres principaux:
+\begin{itemize}
+    \item Le premier chapitre présente l'entreprise d'accueil, son secteur d'activité et son organisation.
+    \item Le deuxième chapitre détaille le cahier des charges du projet, les besoins fonctionnels et non fonctionnels, ainsi que les contraintes techniques.
+    \item Le troisième chapitre aborde la phase de conception du projet, avec les différents diagrammes UML et la modélisation de la base de données.
+    \item Le quatrième chapitre décrit la phase de développement, les technologies utilisées, l'architecture du projet, et présente des captures d'écran de l'application finale.
+\end{itemize}
+
+\chapter{L'Entreprise d'Accueil}
+
+\section{Présentation de l'Entreprise}
+[Nom de l'Entreprise] est une entreprise spécialisée dans le développement de solutions numériques pour le secteur de la restauration. Fondée en [année], elle a pour mission de faciliter la transformation numérique des restaurants et d'améliorer l'expérience client dans ce secteur.
+
+\section{Secteur d'Activité}
+L'entreprise opère principalement dans le secteur de la restauration et des technologies de l'information. Elle propose des solutions adaptées aux besoins spécifiques des restaurants, allant des systèmes de gestion de commandes aux plateformes de marketing numérique.
+
+\section{Organisation et Structure}
+L'entreprise est organisée en plusieurs départements:
+\begin{itemize}
+    \item Département de développement logiciel
+    \item Département de design UX/UI
+    \item Département commercial et marketing
+    \item Département de support client
+\end{itemize}
+
+\section{Culture d'Entreprise}
+La culture de l'entreprise est axée sur l'innovation, la collaboration et la satisfaction client. L'environnement de travail est dynamique et favorise l'échange d'idées et la créativité.
+
+\section{Conclusion}
+Cette première expérience en entreprise m'a permis de découvrir le fonctionnement d'une structure professionnelle dans le domaine du développement web. J'ai pu observer les méthodes de travail, les processus de développement et les interactions entre les différents départements.
+
+\chapter{Cahier des Charges}
+
+\section{Contexte du Projet}
+Le projet "Plate Palace Portal" répond à un besoin croissant des restaurants de disposer d'une solution simple et efficace pour gérer leur menu en ligne. Avec l'essor des commandes en ligne et l'utilisation croissante des réseaux sociaux pour la promotion des restaurants, il était nécessaire de développer une application permettant aux restaurateurs de créer et partager facilement leur menu.
+
+\section{Besoins Fonctionnels}
+Les principales fonctionnalités requises pour l'application sont:
+\begin{itemize}
+    \item Authentification des utilisateurs (restaurateurs)
+    \item Création et configuration du profil du restaurant
+    \item Gestion des catégories de menu
+    \item Ajout, modification et suppression d'articles du menu
+    \item Génération d'un menu public partageable
+    \item Intégration avec WhatsApp pour les commandes
+    \item Interface responsive adaptée aux mobiles
+\end{itemize}
+
+\section{Besoins Non Fonctionnels}
+\begin{itemize}
+    \item Performance: temps de chargement rapide des pages
+    \item Sécurité: protection des données utilisateurs
+    \item Scalabilité: capacité à gérer un nombre croissant d'utilisateurs
+    \item Fiabilité: disponibilité constante du service
+    \item Facilité d'utilisation: interface intuitive
+\end{itemize}
+
+\section{Contraintes Techniques}
+\begin{itemize}
+    \item Utilisation de React pour le frontend
+    \item Utilisation de Supabase pour le backend et l'authentification
+    \item Développement avec TypeScript pour assurer la qualité du code
+    \item Intégration de Tailwind CSS et shadcn/ui pour l'interface utilisateur
+    \item Tests unitaires pour garantir la fiabilité du code
+\end{itemize}
+
+\section{Conclusion}
+Le cahier des charges a permis de définir clairement les objectifs du projet et les contraintes techniques à respecter. Cette étape a été cruciale pour orienter le développement et assurer que l'application réponde aux besoins des utilisateurs finaux.
+
+\chapter{Conception et Modélisation}
+
+\section{Architecture Globale}
+L'architecture de l'application est basée sur le modèle client-serveur, avec une séparation claire entre le frontend et le backend. Le frontend est développé avec React et TypeScript, tandis que le backend utilise Supabase pour la gestion des données et l'authentification.
+
+\section{Diagrammes UML}
+\subsection{Diagramme de Cas d'Utilisation}
+Le diagramme de cas d'utilisation présente les différentes interactions possibles entre les utilisateurs et le système:
+\begin{itemize}
+    \item Inscription et connexion
+    \item Configuration du restaurant
+    \item Gestion du menu
+    \item Partage du menu public
+    \item Réception des commandes via WhatsApp
+\end{itemize}
+
+\subsection{Diagramme de Classes}
+Le diagramme de classes représente les principales entités du système et leurs relations:
+\begin{itemize}
+    \item Utilisateur (restaurateur)
+    \item Restaurant
+    \item Catégorie de menu
+    \item Article de menu
+\end{itemize}
+
+\subsection{Diagramme de Séquence}
+Les diagrammes de séquence illustrent les interactions entre les différents composants du système pour des scénarios spécifiques, comme:
+\begin{itemize}
+    \item Processus d'authentification
+    \item Ajout d'un nouvel article au menu
+    \item Partage du menu et réception d'une commande
+\end{itemize}
+
+\section{Modélisation de la Base de Données}
+La base de données est structurée autour de trois tables principales:
+\begin{itemize}
+    \item \texttt{profiles}: stocke les informations des utilisateurs
+    \item \texttt{restaurants}: contient les détails des restaurants
+    \item \texttt{menu\_items}: enregistre les articles du menu avec leurs caractéristiques
+\end{itemize}
+
+\section{Maquettes d'Interface}
+Les maquettes d'interface ont été réalisées pour visualiser l'apparence et l'expérience utilisateur de l'application avant le développement. Elles comprennent:
+\begin{itemize}
+    \item Page d'accueil
+    \item Écran d'authentification
+    \item Tableau de bord du restaurant
+    \item Interface de gestion du menu
+    \item Vue du menu public pour les clients
+\end{itemize}
+
+\section{Conclusion}
+La phase de conception a permis de structurer le projet et de définir clairement les différentes composantes de l'application. Les diagrammes UML et la modélisation de la base de données ont servi de guide pour le développement, assurant une implémentation cohérente et efficace.
+
+\chapter{Développement et Réalisation}
+
+\section{Environnement de Développement}
+L'environnement de développement mis en place pour ce projet comprend:
+\begin{itemize}
+    \item Visual Studio Code comme IDE
+    \item Git pour le contrôle de version
+    \item Node.js et npm pour la gestion des packages
+    \item Vite comme outil de build
+    \item Vitest pour les tests unitaires
+\end{itemize}
+
+\section{Technologies Utilisées}
+\subsection{Frontend}
+\begin{itemize}
+    \item React 18: bibliothèque JavaScript pour la construction d'interfaces utilisateur
+    \item TypeScript: superset de JavaScript ajoutant le typage statique
+    \item React Router: pour la gestion des routes
+    \item React Query: pour la gestion des requêtes API et du cache
+    \item Tailwind CSS: framework CSS utilitaire
+    \item shadcn/ui: composants UI réutilisables basés sur Radix UI
+\end{itemize}
+
+\subsection{Backend}
+\begin{itemize}
+    \item Supabase: plateforme backend-as-a-service
+    \item PostgreSQL: système de gestion de base de données relationnelle
+    \item Row Level Security (RLS): pour la sécurité des données
+\end{itemize}
+
+\section{Architecture du Code}
+Le code source est organisé selon une architecture modulaire:
+\begin{itemize}
+    \item \texttt{/src/components}: composants UI réutilisables
+    \item \texttt{/src/pages}: composants de page pour chaque route
+    \item \texttt{/src/contexts}: contextes React pour la gestion de l'état global
+    \item \texttt{/src/hooks}: hooks personnalisés
+    \item \texttt{/src/integrations}: intégrations avec des services externes
+    \item \texttt{/src/lib}: utilitaires et fonctions d'aide
+    \item \texttt{/src/test}: tests unitaires
+\end{itemize}
+
+\section{Fonctionnalités Implémentées}
+\subsection{Authentification}
+L'authentification est gérée par Supabase Auth, permettant aux utilisateurs de s'inscrire et de se connecter avec leur email et mot de passe.
+
+\subsection{Gestion du Restaurant}
+Les utilisateurs peuvent configurer les détails de leur restaurant, comme le nom, la description, l'adresse et le logo.
+
+\subsection{Gestion du Menu}
+L'interface de gestion du menu permet aux restaurateurs de:
+\begin{itemize}
+    \item Ajouter de nouveaux articles avec nom, description, prix et catégorie
+    \item Modifier les articles existants
+    \item Supprimer des articles
+    \item Organiser les articles par catégorie
+\end{itemize}
+
+\subsection{Menu Public}
+Le menu public est accessible via une URL unique et présente:
+\begin{itemize}
+    \item Les informations du restaurant
+    \item Les articles du menu organisés par catégorie
+    \item Une interface pour ajouter des articles au panier
+    \item Un bouton pour commander via WhatsApp
+\end{itemize}
+
+\section{Tests et Qualité du Code}
+Des tests unitaires ont été implémentés pour assurer la fiabilité du code:
+\begin{itemize}
+    \item Tests des composants UI avec React Testing Library
+    \item Tests des hooks personnalisés
+    \item Tests d'intégration pour les fonctionnalités principales
+\end{itemize}
+
+\section{Captures d'Écran de l'Application}
+[Insérer ici des captures d'écran des principales interfaces de l'application]
+
+\section{Conclusion}
+La phase de développement a permis de concrétiser les concepts définis lors de la conception. L'utilisation de technologies modernes comme React, TypeScript et Supabase a facilité la création d'une application performante et évolutive. Les tests unitaires ont contribué à assurer la qualité du code et la fiabilité de l'application.
+
+\chapter*{Conclusion Générale}
+\addcontentsline{toc}{chapter}{Conclusion Générale}
+
+Ce stage m'a permis de mettre en pratique mes connaissances théoriques dans un contexte professionnel et de développer de nouvelles compétences techniques. J'ai pu travailler sur un projet concret, de sa conception à sa réalisation, et comprendre les enjeux du développement d'applications web modernes.
+
+Le projet "Plate Palace Portal" répond à un besoin réel des restaurateurs et offre une solution simple et efficace pour la gestion et le partage de menus. L'application développée est fonctionnelle, intuitive et évolutive, permettant d'envisager des améliorations futures.
+
+Parmi les compétences acquises durant ce stage, je peux citer:
+\begin{itemize}
+    \item Maîtrise de React et TypeScript dans un contexte professionnel
+    \item Utilisation de Supabase comme solution backend
+    \item Conception et modélisation d'applications web
+    \item Travail en équipe et communication professionnelle
+    \item Gestion de projet et respect des délais
+\end{itemize}
+
+Ce stage constitue une étape importante dans mon parcours professionnel et me conforte dans mon choix de carrière dans le développement web. Les connaissances et l'expérience acquises seront précieuses pour mes futurs projets et opportunités professionnelles.
+
+\chapter*{Bibliographie}
+\addcontentsline{toc}{chapter}{Bibliographie}
+
+\begin{thebibliography}{9}
+
+\bibitem{react}
+React Documentation, 
+\url{https://reactjs.org/docs/getting-started.html}
+
+\bibitem{typescript}
+TypeScript Documentation, 
+\url{https://www.typescriptlang.org/docs/}
+
+\bibitem{supabase}
+Supabase Documentation, 
+\url{https://supabase.io/docs}
+
+\bibitem{tailwind}
+Tailwind CSS Documentation, 
+\url{https://tailwindcss.com/docs}
+
+\bibitem{shadcn}
+shadcn/ui Documentation, 
+\url{https://ui.shadcn.com/docs}
+
+\bibitem{reactquery}
+TanStack Query Documentation, 
+\url{https://tanstack.com/query/latest/docs/react/overview}
+
+\bibitem{vite}
+Vite Documentation, 
+\url{https://vitejs.dev/guide/}
+
+\bibitem{testing}
+React Testing Library Documentation, 
+\url{https://testing-library.com/docs/react-testing-library/intro/}
+
+\end{thebibliography}
+
+\end{document} 

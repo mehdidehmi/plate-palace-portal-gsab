@@ -179,7 +179,21 @@ const PublicMenu = () => {
     // Use restaurant phone if available, otherwise default
     const phoneNumber = restaurant?.phone || "0619684987";
     const cleanPhone = phoneNumber.replace(/\D/g, ''); // Remove non-digits
-    const whatsappUrl = `https://wa.me/33${cleanPhone.substring(1)}?text=${encodeURIComponent(message)}`;
+    
+    // Format for Moroccan numbers (+212)
+    let formattedPhone;
+    if (cleanPhone.startsWith('0')) {
+      // Remove leading 0 and add 212
+      formattedPhone = `212${cleanPhone.substring(1)}`;
+    } else if (cleanPhone.startsWith('212')) {
+      // Already has country code
+      formattedPhone = cleanPhone;
+    } else {
+      // Add 212 prefix
+      formattedPhone = `212${cleanPhone}`;
+    }
+    
+    const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
     
     window.open(whatsappUrl, '_blank');
   };

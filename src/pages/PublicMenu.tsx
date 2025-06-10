@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -38,16 +37,20 @@ const PublicMenu = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
+  console.log('Restaurant ID from URL:', restaurantId);
+
   // Fetch restaurant info
-  const { data: restaurant } = useQuery({
+  const { data: restaurant, isLoading: restaurantLoading, error: restaurantError } = useQuery({
     queryKey: ['public-restaurant', restaurantId],
     queryFn: async () => {
+      console.log('Fetching restaurant with ID:', restaurantId);
       const { data, error } = await supabase
         .from('restaurants')
         .select('*')
         .eq('id', restaurantId)
         .single();
       
+      console.log('Restaurant fetch result:', { data, error });
       if (error) throw error;
       return data;
     },
@@ -55,7 +58,7 @@ const PublicMenu = () => {
   });
 
   // Fetch menu items
-  const { data: menuItems = [] } = useQuery({
+  const { data: menuItems = [], isLoading: menuLoading } = useQuery({
     queryKey: ['public-menu', restaurantId],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -65,10 +68,11 @@ const PublicMenu = () => {
         .eq('is_available', true)
         .order('category', { ascending: true });
       
+      console.log('Menu items fetch result:', { data, error });
       if (error) throw error;
       return data;
     },
-    enabled: !!restaurantId,
+    enabled: !!restaurantId && !!restaurant,
   });
 
   const addToCart = (item: MenuItem) => {
@@ -141,12 +145,27 @@ const PublicMenu = () => {
     return acc;
   }, {} as Record<string, MenuItem[]>);
 
-  if (!restaurant) {
+  // Loading state
+  if (restaurantLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600 mx-auto mb-4"></div>
+          <p>Chargement du restaurant...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error or no restaurant found
+  if (restaurantError || !restaurant) {
+    console.error('Restaurant error:', restaurantError);
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Restaurant non trouvé</h1>
           <p className="text-gray-600">Ce restaurant n'existe pas ou n'est plus disponible.</p>
+          <p className="text-sm text-gray-400 mt-2">ID recherché: {restaurantId}</p>
         </div>
       </div>
     );

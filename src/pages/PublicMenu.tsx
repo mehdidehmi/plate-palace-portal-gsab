@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -48,10 +49,13 @@ const PublicMenu = () => {
         .from('restaurants')
         .select('*')
         .eq('id', restaurantId)
-        .single();
+        .maybeSingle();
       
       console.log('Restaurant fetch result:', { data, error });
-      if (error) throw error;
+      if (error) {
+        console.error('Restaurant fetch error:', error);
+        throw error;
+      }
       return data;
     },
     enabled: !!restaurantId,
@@ -70,7 +74,7 @@ const PublicMenu = () => {
       
       console.log('Menu items fetch result:', { data, error });
       if (error) throw error;
-      return data;
+      return data || [];
     },
     enabled: !!restaurantId && !!restaurant,
   });
@@ -162,16 +166,54 @@ const PublicMenu = () => {
     console.error('Restaurant error:', restaurantError);
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
+        <div className="text-center max-w-md mx-auto p-6">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Restaurant non trouvé</h1>
-          <p className="text-gray-600">Ce restaurant n'existe pas ou n'est plus disponible.</p>
-          <p className="text-sm text-gray-400 mt-2">ID recherché: {restaurantId}</p>
+          <p className="text-gray-600 mb-4">Ce restaurant n'existe pas ou n'est plus disponible.</p>
+          <p className="text-sm text-gray-400 mb-6">ID recherché: {restaurantId}</p>
+          
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <h3 className="font-semibold mb-2">Propriétaire du restaurant ?</h3>
+            <p className="text-sm text-gray-600 mb-3">
+              Si c'est votre restaurant, vous devez d'abord le configurer dans votre tableau de bord.
+            </p>
+            <Button 
+              onClick={() => window.location.href = '/dashboard'}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Aller au tableau de bord
+            </Button>
+          </div>
         </div>
       </div>
     );
   }
 
   const themeColor = restaurant.theme_color || '#ef4444';
+
+  // If no menu items, show empty state
+  if (!menuLoading && menuItems.length === 0) {
+    return (
+      <div className="min-h-screen" style={{ backgroundColor: '#f9fafb' }}>
+        {/* Header */}
+        <div 
+          className="text-white py-8"
+          style={{ backgroundColor: themeColor }}
+        >
+          <div className="max-w-4xl mx-auto px-4">
+            <h1 className="text-3xl font-bold mb-2">{restaurant.name}</h1>
+            {restaurant.description && (
+              <p className="text-lg opacity-90">{restaurant.description}</p>
+            )}
+          </div>
+        </div>
+
+        <div className="max-w-4xl mx-auto px-4 py-12 text-center">
+          <h2 className="text-2xl font-bold mb-4">Menu bientôt disponible</h2>
+          <p className="text-gray-600">Le restaurant n'a pas encore ajouté d'articles au menu.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f9fafb' }}>
@@ -210,17 +252,19 @@ const PublicMenu = () => {
         </div>
 
         {/* Categories */}
-        <div className="flex space-x-2 mb-6 overflow-x-auto">
-          {Object.keys(groupedItems).map((category) => (
-            <Button
-              key={category}
-              variant="outline"
-              className="whitespace-nowrap"
-            >
-              {category}
-            </Button>
-          ))}
-        </div>
+        {Object.keys(groupedItems).length > 0 && (
+          <div className="flex space-x-2 mb-6 overflow-x-auto">
+            {Object.keys(groupedItems).map((category) => (
+              <Button
+                key={category}
+                variant="outline"
+                className="whitespace-nowrap"
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
+        )}
 
         {/* Menu Items */}
         <div className="space-y-6">
